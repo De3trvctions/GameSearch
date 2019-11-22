@@ -227,6 +227,29 @@ class App extends Component {
                     <Jumbotron>
                         <h1 className="display-4">Game Search</h1>
                         <p className="lead">Search for game</p>
+                        <Col sm="12">
+                            <div>
+                                <Button color="info" onClick={this.toggle}>Request a game</Button>
+                                <Modal isOpen={this.state.modal} toggle={this.toggle} className="modaltest">
+                                    <ModalHeader toggle={this.toggle}>Request a game</ModalHeader>
+                                    <ModalBody>
+                                        <Form onSubmit={this.onSubmit}>
+                                            <FormGroup>
+                                                <Label for="title">Request New Game to View</Label>
+                                                <Input
+                                                    type="text"
+                                                    name="title"
+                                                    id="title"
+                                                    placeholder="Please Enter the Game's Name"
+                                                    onChange={this.onChange}
+                                                />
+                                            </FormGroup>
+                                            <Button color="primary">Submit</Button>
+                                        </Form>
+                                    </ModalBody>
+                                </Modal>
+                            </div>
+                        </Col>
                     </Jumbotron>
                     <Row>
                         <Col>
@@ -240,42 +263,17 @@ class App extends Component {
                         </Col>
                     </Row>
                     <Row>
-                        <Col sm="9">
+                        <Col sm="12">
                             <Input
                                 type="text"
                                 name="title"
                                 id="findGame"
-                                placeholder="Search a game title..."
+                                placeholder="Look For a Game"
                                 onChange={this.onFindGame}
                             />
                         </Col>
 
-                        <Col sm="3">
-                            <div>
-                                <Button color="success" onClick={this.toggle}>Request a game</Button>
-                                <Modal isOpen={this.state.modal} toggle={this.toggle} className="modaltest">
-                                    <ModalHeader toggle={this.toggle}>Request a game</ModalHeader>
-                                    <ModalBody>
 
-                                        <Form onSubmit={this.onSubmit}>
-                                            <FormGroup>
-                                                <Label for="title">Add a Game</Label>
-                                                <Input
-                                                    type="text"
-                                                    name="title"
-                                                    id="title"
-                                                    placeholder="enter game title..."
-                                                    onChange={this.onChange}
-                                                />
-                                            </FormGroup>
-                                            <Button color="primary">Submit</Button>
-                                        </Form>
-
-                                    </ModalBody>
-                                </Modal>
-                            </div>
-
-                        </Col>
                     </Row>
 
                     <Row>

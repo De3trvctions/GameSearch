@@ -146,6 +146,18 @@ app.get('/update' , (req,res) => {
     })
 });
 
+//This function is to search game in api
+app.get('/findgameAPI', (req, res) => {
+    const name = req.query.name;
+    const querystr = `https://api.rawg.io/api/games?search=${name}`;
+
+    axios.get(querystr).then(res =>{
+        res.status(200).json(result.data);
+    }).catch(error=>{
+        res.status(400).json(error);
+    });
+})
+
 app.listen(5000, ()=>{
     console.log('server listening on post 5000');
 });
