@@ -53,49 +53,38 @@ class App extends Component {
     onSubmit = e => {
         e.preventDefault();
         this.setState({ alertVisible: false });
-
         const query = `/create?name=${this.state.title}`;
-
-        axios
-            .get(query)
-            .then(result => {
-                console.log(result.data);
-                if (result.data === 'Not found') {
-                    this.setState({ alertVisible: true });
-                } else if (result.data === 'This game already exist in the database') {
-                    alert(result.data);
-                }
-                this.getAllMovies();
-            })
-            .catch(error => {
-                alert('Error: ', error);
-            });
-
+        axios.get(query)
+        .then(result => {
+            console.log(result.data);
+            if (result.data === 'Not found') {
+                this.setState({ alertVisible: true });
+            } else if (result.data === 'This game already exist in the database') {
+                this.setState({ alertVisible: true });
+                alert(result.data);
+            }this.getAllMovies();
+        }).catch(error => {
+            console.error(error)
+            alert('Error: ', error);
+        });
         this.toggle();
     };
 
     onFindGame = e => {
-
         e.preventDefault();
         this.setState({ alertVisible: false });
-
         if (e.target.value == "") {
-
             this.getAllMovies();
-        } else {
+        } 
+        else {
             const query = `/findgame?name=${e.target.value}`;
-
-            axios.get(query).
-                then(result => {
-
-                    this.setState({ movies: result.data });
-                    console.log(result.data);
-
-                }).catch(err => {
-                    console.log(err);
-                });
+            axios.get(query).then(result => {
+                this.setState({ movies: result.data });
+                console.log(result.data);
+            }).catch(err => {
+                console.log(err);
+            });
         }
-
     }
 
     // for form field
@@ -103,19 +92,15 @@ class App extends Component {
         this.setState({
             [e.target.name]: e.target.value
         });
-
     }
 
     getAllMovies = () => {
-        axios
-            .get("/getAllMovies")
-            .then(result => {
-                this.setState({ movies: result.data });
-                console.log(this.state.movies);
-            })
-            .catch(error => {
-                console.log(error);
-            });
+        axios.get("/games").then(result => {
+            this.setState({ movies: result.data });
+            console.log(this.state.movies);
+        }).catch(error => {
+            console.log(error);
+        });
     };
 
     componentDidMount() {
@@ -125,30 +110,22 @@ class App extends Component {
     deleteRecord = value => {
         console.log("to delete: ", value);
         const query = `/delete?id=${value}`;
-        axios
-            .get(query)
-            .then(result => {
-                this.getAllMovies();
-            })
-            .catch(error => {
-                alert("Error: ", error);
-            });
+        axios.get(query).then(result => {
+            this.getAllMovies();
+        }).catch(error => {
+            alert("Error: ", error);
+        });
     };
 
-    editRecord = (id, value, platform, genres) => {
-
-        const query = `/update?id=${id}&text=${value}&platform=${platform}&genres=${genres}`;
+    editRecord = (id, value, genres) => {
+        const query = `/update?id=${id}&text=${value}&genres=${genres}`;
         console.log(query);
-        axios
-            .get(query)
-            .then(result => {
-                this.getAllMovies();
-                console.log("updated");
-            }).catch(error => {
-
-                alert("Error:" + error);
-            });
-
+        axios.get(query).then(result => {
+            this.getAllMovies();
+            console.log("updated");
+        }).catch(error => {
+            alert("Error:" + error);
+        });
     };
 
     handleClick(event) {
@@ -203,26 +180,19 @@ class App extends Component {
 
         function HasGame(){
             if(movies.length == 0){
-                
                 return(
-                    
                     <div class="noGameDiv">
-
                         <img src="http://pm1.narvii.com/6688/d91c5f2917fe35c3862d2b2a8a2fc91c89e16450_00.jpg">
-                            
                         </img>
                         <p>No result is found</p>
                     </div>
-                
                 );
             }
-
             return(<br></br>);
         }
 
         return (
             <div className="App">
-
                 <Container>
                     <Jumbotron>
                         <h1 className="display-4">Game Search</h1>
@@ -272,10 +242,7 @@ class App extends Component {
                                 onChange={this.onFindGame}
                             />
                         </Col>
-
-
                     </Row>
-
                     <Row>
                         <HasGame></HasGame>
                         <div class="page-items">
@@ -283,14 +250,12 @@ class App extends Component {
                                 <Row>
                                     {renderTodos}
                                 </Row>
-
                             </ul>
                             <ul id="page-numbers">
                                 {renderPageNumbers}
                             </ul>
                         </div>
                     </Row>
-
                 </Container>
             </div>
         );
