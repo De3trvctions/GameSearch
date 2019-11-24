@@ -17,6 +17,7 @@ import {
     ModalHeader,
     ModalBody
 } from 'reactstrap';
+import Swal from 'sweetalert2';
 
 class App extends Component {
     constructor() {
@@ -52,21 +53,52 @@ class App extends Component {
     //for form
     onSubmit = e => {
         e.preventDefault();
-        this.setState({ alertVisible: false });
+        let timerInterval
+        Swal.fire({
+        title: 'Searching in process, please eait',
+        timer: 2000,
+        timerProgressBar: true,
+        onBeforeOpen: () => {
+            Swal.showLoading()
+        },
+        onClose: () => {
+            clearInterval(timerInterval)
+        }
+        }).then((result) => {
+        if (
+            /* Read more about handling dismissals below */
+            result.dismiss === Swal.DismissReason.timer
+        ) {
+            console.log('I was closed by the timer') // eslint-disable-line
+        }
+        })
+        //this.setState({ alertVisible: false });
         const query = `/create?name=${this.state.title}`;
         axios.get(query)
         .then(result => {
             console.log(result.data);
-            
             if (result.data === 'Not found') {
-                this.setState({ alertVisible: true });
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Game is not found',
+                  })
+
             } else if (result.data === 'This game already exist in the database') {
-                this.setState({ alertVisible: true });
-                alert(result.data);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: result.data,
+                    footer: "Try to use the search tools below"
+                  })
             }this.getAllMovies();
         }).catch(error => {
-            console.error(error)
-            alert('Error: ', error);
+            console.error(error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: error,
+            })
         });
         this.toggle();
     };
@@ -114,7 +146,11 @@ class App extends Component {
         axios.get(query).then(result => {
             this.getAllMovies();
         }).catch(error => {
-            alert("Error: ", error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: error,
+            })
         });
     };
 
@@ -125,7 +161,11 @@ class App extends Component {
             this.getAllMovies();
             console.log("updated");
         }).catch(error => {
-            alert("Error:" + error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: error,
+            })
         });
     };
 
@@ -169,7 +209,7 @@ class App extends Component {
 
         const renderPageNumbers = pageNumbers.map(number => {
             return (
-                <li
+                <li class="list-group-item list-group-item-action"
                     key={number}
                     id={number}
                     onClick={this.handleClick}
@@ -230,7 +270,7 @@ class App extends Component {
                                 isOpen={this.state.alertVisible}
                                 toggle={this.onDismiss}
                             >
-                                Game not found
+                                Game is either existed or not found! Please try again
                             </Alert>
                         </Col>
                     </Row>
@@ -247,13 +287,14 @@ class App extends Component {
                     </Row>
                     <Row>
                         <HasGame></HasGame>
-                        <div class="page-items">
-                            <ul>
+                        <div class="pagitems">
+                            <ul class="list-group list-group-horizontal">
                                 <Row>
                                     {renderTodos}
                                 </Row>
                             </ul>
-                            <ul id="page-numbers">
+                            <hr/>
+                            <ul class="list-group list-group-horizontal">
                                 {renderPageNumbers}
                             </ul>
                         </div>

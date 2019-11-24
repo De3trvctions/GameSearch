@@ -40,9 +40,8 @@
   background-color: rgb(236, 134, 240);
 }
 
-#page-numbers >li{
-  border: 1px solid black;
-  padding: 5px 10px;
+.display-5{
+  color: white;
 }
 
 #page-numbers{

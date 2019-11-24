@@ -142,7 +142,6 @@ export class GameCard extends Component {
                                             <ModalHeader>Delete</ModalHeader>
                                             <ModalBody>Do you want to delete this?</ModalBody>
                                             <ModalFooter>
-                                                <Button color="warning"> Cancel</Button>{' '}
                                                 <Button color="primary" onClick={this.delete}>Done</Button>{' '}
                                             </ModalFooter>
                                         </Modal>

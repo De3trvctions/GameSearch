@@ -15,6 +15,9 @@ app.get('/create' , (req, response) =>{
     const querystr = `https://api.rawg.io/api/games?search=${name}`;
     axios.get(querystr).then(res =>{
         var ids = res.data.results[0].id;
+        // if(ids == null){
+        //     response.status(200).json("Not found");
+        // }
         Index.find({id: ids}).then(db => {
             console.log(db.length)
             if(db.length !== 0){
@@ -58,11 +61,11 @@ app.get('/create' , (req, response) =>{
                             });
                             // START SAVING INTO DB //
 
-                            // if (!DB.id) {
-                            //     res.status(200).json("Not Found");
-                            //     console.log("5");
-                            //     return;
-                            // }
+                            if (!DB.id) {
+                                response.status(200).json("Not Found");
+                                console.log("5");
+                                return;
+                            }
                             DB.save().then(result =>{
                                 response.status(200).json(result);
                             }).catch(err =>{
@@ -80,6 +83,8 @@ app.get('/create' , (req, response) =>{
         }).catch(err => {
             response.status(200).json(err);
         });
+    }).catch(errree => {
+        response.status(200).json("Not found");
     });
 });
 
