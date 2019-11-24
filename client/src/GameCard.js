@@ -30,7 +30,6 @@ export class GameCard extends Component {
             nested: false,
             close: false
         };
-
         this.toggle = this.toggle.bind(this);
         this.toggleNested = this.toggleNested.bind(this);
         this.toggleAll = this.toggleAll.bind(this);
@@ -78,31 +77,13 @@ export class GameCard extends Component {
 
     handleHover = () => {
         mousein(this.props.games.id);
-    }    
-    
+    }  
+
     handleHoverOut = () => {
         mouseout(this.props.games.id);
     }
 
-
     render() {
-        function TimeStamp(props) {
-            // Months array
-            var months_arr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-            // Convert timestamp to milliseconds
-            var date = new Date(props.timeStamp * 1000);
-            // Year
-            var year = date.getFullYear();
-            // Month
-            var month = months_arr[date.getMonth()];
-            // Day
-            var day = date.getDate();
-            // Display date time in MM-dd-yyyy format
-            var formattedTime = day + '-' + month + '-' + year;
-            return (
-                <p>{formattedTime}</p>
-            );
-        }
 
         function GenresList(props) {
             const numbers = props.genres;
@@ -122,11 +103,8 @@ export class GameCard extends Component {
                     <div>
                         <Modal isOpen={this.state.modal} toggle={this.toggle} className="modaltest"> 
                             <ModalHeader toggle={this.toggle}>{this.props.games.name}</ModalHeader>
-
                             <ModalBody >
-
                                 <Row>
-
                                     <Col>
                                         <img src={this.props.games.cover} width="100%"/>
                                         <br /><br />
@@ -171,7 +149,6 @@ export class GameCard extends Component {
                                     </Col>
 
                                 </Row>
-
                             </ModalBody>
                             <ModalFooter>
                                 <Button id="saveBtn" color="success" onClick={this.edit}>Save</Button>{' '}
@@ -181,7 +158,6 @@ export class GameCard extends Component {
                     </div>
                 </Card>
             </div>
-
         );
     }
 }

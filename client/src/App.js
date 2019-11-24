@@ -57,6 +57,7 @@ class App extends Component {
         axios.get(query)
         .then(result => {
             console.log(result.data);
+            
             if (result.data === 'Not found') {
                 this.setState({ alertVisible: true });
             } else if (result.data === 'This game already exist in the database') {
@@ -195,17 +196,18 @@ class App extends Component {
             <div className="App">
                 <Container>
                     <Jumbotron>
-                        <h1 className="display-4">Game Search</h1>
+                        <h1 className="display-5">Game Search</h1>
+                        <hr className="my-3"/>
                         <p className="lead">Search for game</p>
                         <Col sm="12">
                             <div>
-                                <Button color="info" onClick={this.toggle}>Request a game</Button>
+                                <Button color="info" onClick={this.toggle}>Request new game</Button>
                                 <Modal isOpen={this.state.modal} toggle={this.toggle} className="modaltest">
-                                    <ModalHeader toggle={this.toggle}>Request a game</ModalHeader>
+                                    <ModalHeader toggle={this.toggle}>Game is not in the menu? <b>Request Now</b></ModalHeader>
                                     <ModalBody>
                                         <Form onSubmit={this.onSubmit}>
                                             <FormGroup>
-                                                <Label for="title">Request New Game to View</Label>
+                                                <Label for="title"> Request New Game to View</Label>
                                                 <Input
                                                     type="text"
                                                     name="title"
@@ -214,7 +216,7 @@ class App extends Component {
                                                     onChange={this.onChange}
                                                 />
                                             </FormGroup>
-                                            <Button color="primary">Submit</Button>
+                                            <Button color="success">Submit</Button>
                                         </Form>
                                     </ModalBody>
                                 </Modal>
@@ -238,7 +240,7 @@ class App extends Component {
                                 type="text"
                                 name="title"
                                 id="findGame"
-                                placeholder="Look For a Game"
+                                placeholder="Look For a Game (Below)"
                                 onChange={this.onFindGame}
                             />
                         </Col>
