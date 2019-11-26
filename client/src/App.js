@@ -19,7 +19,7 @@ import {
 } from 'reactstrap';
 import Swal from 'sweetalert2';
 
-const URL = "https://game-search-server666.herokuapp.com/";
+//const URL = "https://game-search-server666.herokuapp.com/";
 
 class App extends Component {
     constructor() {
@@ -57,7 +57,7 @@ class App extends Component {
         e.preventDefault();
         let timerInterval
         Swal.fire({
-        title: 'Searching in process, please eait',
+        title: 'Searching in process, please wait',
         timer: 2000,
         timerProgressBar: true,
         onBeforeOpen: () => {
@@ -75,7 +75,7 @@ class App extends Component {
         }
         })
         //this.setState({ alertVisible: false });
-        const query = URL + `/create?name=${this.state.title}`;
+        const query = `/create?name=${this.state.title}`;
         axios.get(query)
         .then(result => {
             console.log(result.data);
@@ -112,7 +112,7 @@ class App extends Component {
             this.getAllMovies();
         } 
         else {
-            const query = URL + `/findgame?name=${e.target.value}`;
+            const query = `/findgame?name=${e.target.value}`;
             axios.get(query).then(result => {
                 this.setState({ movies: result.data });
                 console.log(result.data);
@@ -130,7 +130,7 @@ class App extends Component {
     }
 
     getAllMovies = () => {
-        axios.get(URL + "/games").then(result => {
+        axios.get("/games").then(result => {
             this.setState({ movies: result.data });
             console.log(this.state.movies);
         }).catch(error => {
@@ -144,7 +144,7 @@ class App extends Component {
 
     deleteRecord = value => {
         console.log("to delete: ", value);
-        const query = URL +  `/delete?id=${value}`;
+        const query = `/delete?id=${value}`;
         axios.get(query).then(result => {
             this.getAllMovies();
         }).catch(error => {
@@ -157,7 +157,7 @@ class App extends Component {
     };
 
     editRecord = (id, value, genres) => {
-        const query = URL + `/update?id=${id}&text=${value}&genres=${genres}`;
+        const query = `/update?id=${id}&text=${value}&genres=${genres}`;
         console.log(query);
         axios.get(query).then(result => {
             this.getAllMovies();
